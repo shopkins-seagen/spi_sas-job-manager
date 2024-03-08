@@ -1,0 +1,111 @@
+﻿<UserControl
+    x:Class="SasJobManager.UI.View.SasProgramSelector"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="clr-namespace:SasJobManager.UI.Converter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:local="clr-namespace:SasJobManager.UI.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <converter:IsVisibleConverter x:Key="IsVisibleConverter" />
+        <converter:ToggleIconConverter x:Key="ToggleIconConverter" />
+        <converter:ToggleSortIconConverter x:Key="ToggleSortIconConverter" />
+        <converter:ToggleExpandedIconConverter x:Key="ToggleExpandedIconConverter" />
+        <converter:ToggleExpandedTextConverter x:Key="ToggleExpandedTextConverter" />
+
+
+        <Style x:Key="DraggableListBoxItem" TargetType="telerik:RadListBoxItem">
+            <Setter Property="telerik:DragDropManager.AllowCapturedDrag" Value="True" />
+        </Style>
+    </UserControl.Resources>
+    <ScrollViewer MaxHeight="450">
+        <StackPanel Margin="5,0,0,0" Orientation="Vertical">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="80" />
+                </Grid.ColumnDefinitions>
+
+                <Button
+                    Padding="3"
+                    Command="{Binding ToggleIncludeCommand}"
+                    Style="{StaticResource GridButton}">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="0,0,3,0" Text="Include" />
+                            <icons:PackIconFontAwesome Foreground="Blue" Kind="{Binding IsIncludeAllChecked, Converter={StaticResource ToggleIconConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button
+                    Grid.Column="1"
+                    Padding="3"
+                    Command="{Binding ToggleSortCommand}"
+                    Style="{StaticResource GridButton}">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="0,0,3,0" Text="Program" />
+                            <icons:PackIconFontAwesome Foreground="Blue" Kind="{Binding IsAzSort, Converter={StaticResource ToggleSortIconConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button
+                    Grid.Column="2"
+                    Padding="3"
+                    Command="{Binding ToggleQcCommand}"
+                    Style="{StaticResource GridButton}">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="0,0,3,0" Text="Is QC" />
+                            <icons:PackIconFontAwesome Foreground="Blue" Kind="{Binding IsQcAllChecked, Converter={StaticResource ToggleIconConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+
+            </Grid>
+            <telerik:RadListBox
+                x:Name="ListBox"
+                Grid.Column="0"
+                ItemContainerStyle="{StaticResource DraggableListBoxItem}"
+                ItemsSource="{Binding Programs}"
+                SelectionMode="Extended">
+                <telerik:RadListBox.DragDropBehavior>
+
+                    <telerik:ListBoxDragDropBehavior />
+                </telerik:RadListBox.DragDropBehavior>
+                <telerik:RadListBox.ItemTemplate>
+                    <DataTemplate>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="80" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Margin="5,0,0,0"
+                                Text="{Binding Name}" />
+                            <CheckBox
+                                Grid.Column="2"
+                                HorizontalAlignment="Center"
+                                IsChecked="{Binding IsQc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </Grid>
+
+                    </DataTemplate>
+                </telerik:RadListBox.ItemTemplate>
+            </telerik:RadListBox>
+        </StackPanel>
+
+    </ScrollViewer>
+</UserControl>

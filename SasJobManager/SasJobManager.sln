@@ -1,0 +1,82 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SasJobManager.Lib", "SasJobManager.Lib\SasJobManager.Lib.csproj", "{4EF3D7E0-0EBE-4FA2-8E38-0AF6E7EC310C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SasJobManager.ServerLib", "SasJobManager.ServerLib\SasJobManager.ServerLib.csproj", "{5B37B850-DC94-4FC7-BC25-EB846F87C787}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SasJobManager.Lib.Test", "SasJobManager.Lib.Test\SasJobManager.Lib.Test.csproj", "{AA3F2BAD-4BD6-46C4-A043-DF5BBBFA6F0E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SasJobManager.Cli", "SasJobManager.Cli\SasJobManager.Cli.csproj", "{0C6A8736-FA58-4328-B582-A5B9072BED10}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerManager.Api", "ServerManager.Api\ServerManager.Api.csproj", "{CE7F0DB2-2665-48E8-907D-96B4AE5614B8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3363D752-64E8-488B-BAF7-409D8C533663} = {3363D752-64E8-488B-BAF7-409D8C533663}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SasJobManager.Domain", "SasJobManager.Domain\SasJobManager.Domain.csproj", "{3363D752-64E8-488B-BAF7-409D8C533663}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SasJobManager.UI", "SasJobManager.UI\SasJobManager.UI.csproj", "{FA9A7DB4-3149-41AD-B48A-6E5F82C4A801}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SasJobManager.LaunchScheduledJobs", "SasJobManager.LaunchScheduledJobs\SasJobManager.LaunchScheduledJobs.csproj", "{6538A673-9BA5-41BD-96B7-D803E2B30AD1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SasJobManager.Scheduler", "SasJobManager.Scheduler\SasJobManager.Scheduler.csproj", "{4511A552-38E8-4EDA-ADA9-4DE7D77833F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SasJobManager.Api.Tests", "SasJobManager.Api.Tests\SasJobManager.Api.Tests.csproj", "{27A9E7F9-374F-4DA2-AD27-3DEBA08E5DAC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4EF3D7E0-0EBE-4FA2-8E38-0AF6E7EC310C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EF3D7E0-0EBE-4FA2-8E38-0AF6E7EC310C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EF3D7E0-0EBE-4FA2-8E38-0AF6E7EC310C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EF3D7E0-0EBE-4FA2-8E38-0AF6E7EC310C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B37B850-DC94-4FC7-BC25-EB846F87C787}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B37B850-DC94-4FC7-BC25-EB846F87C787}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B37B850-DC94-4FC7-BC25-EB846F87C787}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B37B850-DC94-4FC7-BC25-EB846F87C787}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA3F2BAD-4BD6-46C4-A043-DF5BBBFA6F0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA3F2BAD-4BD6-46C4-A043-DF5BBBFA6F0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA3F2BAD-4BD6-46C4-A043-DF5BBBFA6F0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA3F2BAD-4BD6-46C4-A043-DF5BBBFA6F0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C6A8736-FA58-4328-B582-A5B9072BED10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C6A8736-FA58-4328-B582-A5B9072BED10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C6A8736-FA58-4328-B582-A5B9072BED10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C6A8736-FA58-4328-B582-A5B9072BED10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE7F0DB2-2665-48E8-907D-96B4AE5614B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE7F0DB2-2665-48E8-907D-96B4AE5614B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE7F0DB2-2665-48E8-907D-96B4AE5614B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE7F0DB2-2665-48E8-907D-96B4AE5614B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3363D752-64E8-488B-BAF7-409D8C533663}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3363D752-64E8-488B-BAF7-409D8C533663}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3363D752-64E8-488B-BAF7-409D8C533663}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3363D752-64E8-488B-BAF7-409D8C533663}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA9A7DB4-3149-41AD-B48A-6E5F82C4A801}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA9A7DB4-3149-41AD-B48A-6E5F82C4A801}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA9A7DB4-3149-41AD-B48A-6E5F82C4A801}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA9A7DB4-3149-41AD-B48A-6E5F82C4A801}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6538A673-9BA5-41BD-96B7-D803E2B30AD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6538A673-9BA5-41BD-96B7-D803E2B30AD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6538A673-9BA5-41BD-96B7-D803E2B30AD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6538A673-9BA5-41BD-96B7-D803E2B30AD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4511A552-38E8-4EDA-ADA9-4DE7D77833F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4511A552-38E8-4EDA-ADA9-4DE7D77833F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4511A552-38E8-4EDA-ADA9-4DE7D77833F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4511A552-38E8-4EDA-ADA9-4DE7D77833F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27A9E7F9-374F-4DA2-AD27-3DEBA08E5DAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27A9E7F9-374F-4DA2-AD27-3DEBA08E5DAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27A9E7F9-374F-4DA2-AD27-3DEBA08E5DAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27A9E7F9-374F-4DA2-AD27-3DEBA08E5DAC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4633B0D2-3FB3-4AEC-B7A6-615415CF9A46}
+	EndGlobalSection
+EndGlobal

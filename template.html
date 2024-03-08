@@ -1,0 +1,277 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes"/>
+        <title>Table with expandable rows</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <style>
+            .expandChildTable:before {
+                content: '+ Findings';
+            }
+            .expandChildTable.selected:before {
+                content: '- Findings';
+            }
+            .parentRow {
+                border-left: 1px solid slategray;
+            }
+            .childTableRow {
+                display: none;
+            }
+            .childTableRow table {
+                border: 1px solid slategray;
+            }
+            .isQc {
+                display: block;
+            }
+            .sup {
+                color: green;
+                margin-left: 6px;
+                font-weight: bold;
+            }
+
+            .failQc {
+                color: red;
+            }
+            .passQc {
+                color: blue;
+            }
+            .tableBtn {
+                font-variant: small-caps;
+                width: 90px;
+            }
+            .filteredRow {
+                visibility: collapse;
+            }
+            .unfilteredRow {
+                visibility: visible;
+            }
+
+            .clean {}
+            .notice {}
+            .note {}
+            .warning {}
+            .error {}
+            .passed {}
+            .failed {}
+        </style>
+
+    </head>
+    <body>
+        <div class="wrapper">
+            <header>
+                <div class="container">
+                    <h3 class="col-lg-9">SAS Log Review</h1>
+                </div>
+            </header>
+            
+            <div class="container">
+
+                <button id="btn" class="btn btn-primary expandChildTable"></button>
+
+                <table class="table" style="table-layout:fixed;" id="t1">
+                    <thead>
+                        <tr>
+                            <th style="width:25%">
+                                <div style="text-align:center;display: flex;">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" style="font-weight: bold;" for="selIssueLevel">Status</label>
+                                    </div>
+                                    <select class="custom-select" id="selIssueLevel" onchange="filterTable()" style="width:100px;margin:0px;">
+                                        <option class="btn btn-sm btn-default">All</option>
+                                        <option class="btn btn-sm btn-danger">Error</option>
+                                        <option class="btn btn-sm btn-warning">Warning</option>
+                                        <option class="btn btn-sm btn-info">Note</option>
+                                        <option class="btn btn-sm btn-primary">Notice</option>
+                                        <option class="btn btn-sm btn-success">Clean</option>
+                                    </select>
+                                </div>
+                            </th>
+                            <th style="width:50%">SAS Log (elapsed time)</th>
+                            <th style="width:25%" class="isQc">
+                                <div style="text-align:center;display: flex;">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" style="font-weight: bold;" for="selQCLevel">QC</label>                                        
+                                    </div>
+                                    <select class="custom-select" id="selQCLevel" onchange="filterTableQc()" style="width:100px;margin:0px;">
+                                        <option class="btn btn-sm btn-primary">All</option>
+                                        <option class="btn btn-sm btn-success">Passed</option>
+                                        <option class="btn btn-sm btn-danger">Failed</option>
+                                    </select>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td colspan="3" >
+                            <span class="alert alert-secondary">O:\Projects\Training\runsas\training_01\production\data\adam\pgms</span>
+                        </td>
+                    </tr>
+                    <tr class="parentRow notice failed">
+                        <td>
+                            <span class="btn btn-primary tableBtn">Notice</span>
+                        </td>
+                        <td>
+                            <a target="_blank" href="O:\Projects\Training\runsas\training_01\production\data\adam\pgms\v-test.log">v-test.log</a>
+                            <sup class="sup">QC</sup>
+                            <i style="float: right;">(23.3 sec)</i>
+                        </td>
+                        <td class="failQc">(1/2)</td>
+                    </tr>
+                    <tr class="childTableRow notice failed">
+                        <td colspan="3">
+                            <h5>Findings</h5>
+                            <table style="table-layout:fixed;width:100%;" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="width:20%">Type (Line#)</th>
+                                        <th style="width:80%;overflow-wrap: normal;">Message</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Notice (287)</td>
+                                        <td>NOTICE: this is only a testdddddddddddddddddddddddd dddddddddddddddd ddddddddddddddddddddddddddddddd dddddddddddd ddddddddddddd ddddd</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Notice (288)</td>
+                                        <td>NOTICE: this is only anohter test</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="parentRow warning passed">
+                        <td>
+                            <span class="btn btn-warning tableBtn">Warning</span>
+                        </td>
+                        <td>
+                            <a target="_blank" href="O:\Projects\Training\runsas\training_01\production\data\adam\pgms\v-test.log">v-test.log</a>
+                            <sup class="sup">QC</sup>
+                            <i style="float:right;">(23.3 sec)</i>
+                        </td>
+                        <td class="passQc">(2/2)</td>
+                    </tr>
+                    <tr class="childTableRow warning passed">
+                        <td colspan="3">
+                            <h5>Findings</h5>
+                            <table style="table-layout:fixed;width:100%;" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="width:20%">Type (Line#)</th>
+                                        <th style="width:80%;overflow-wrap: normal;">Message</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Warning (287)</td>
+                                        <td>WARNING: this is only a test</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Notice (288)</td>
+                                        <td>NOTICE: this is only anohter test</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <footer>
+            <div class="container"></div>
+        </footer>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+        <script>
+
+            $(function () {
+                $('.expandChildTable').on('click', function () {
+                    $(this).toggleClass('selected').closest('tr').next().toggle();
+                })
+            });
+            $(function () {
+                $('.tableBtn').on('click', function () {
+
+                    $(this).toggleClass('selected').closest('tr').next().toggle();
+                })
+            });
+
+            $('#btn').click(function () {
+
+
+                $('#t1 > tbody  > tr').each(function (index, tr) {
+
+                    var rowClass = $(this).attr('class');
+                    if (rowClass != null) {
+                        if (rowClass.includes("parentRow")) {
+
+                            $(this).toggleClass('selected').closest('tr').next().toggle();
+                        }
+                    }
+                });
+            });
+
+
+            function filterTable() {
+
+                $("#selQCLevel").val("All");
+                var val = $("#selIssueLevel").val().toLowerCase();
+
+                $('#t1 > tbody  > tr').each(function (index, tr) {
+
+                    if (val != "all") {
+
+                        var rowClass = $(this).attr('class');
+                        if (rowClass != null) {
+
+                            if (! rowClass.toLowerCase().includes(val)) {
+                                $(this).removeClass('unfilteredRow');
+                                $(this).addClass('filteredRow');
+                            } else {
+                                $(this).removeClass('filteredRow');
+                                $(this).addClass('unfilteredRow');
+                            }
+                        }
+                    } else {
+                        $(this).removeClass('filteredRow');
+                        $(this).addClass('unfilteredRow');
+                    }
+
+                });
+            }
+
+            function filterTableQc() {
+
+                $("#selIssueLevel").val("All")
+                var val = $("#selQCLevel").val().toLowerCase();
+
+                $('#t1 > tbody  > tr').each(function (index, tr) {
+
+                    if (val != "all") {
+
+                        var rowClass = $(this).attr('class');
+                        if (rowClass != null) {
+
+                            if (! rowClass.toLowerCase().includes(val)) {
+                                $(this).removeClass('unfilteredRow');
+                                $(this).addClass('filteredRow');
+                            } else {
+                                $(this).removeClass('filteredRow');
+                                $(this).addClass('unfilteredRow');
+                            }
+                        }
+                    } else {
+                        $(this).removeClass('filteredRow');
+                        $(this).addClass('unfilteredRow');
+                    }
+
+                });
+            }
+
+        </script>
+    </body>
+</html></script></body></html>

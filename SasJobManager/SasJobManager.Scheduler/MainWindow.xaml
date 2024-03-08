@@ -1,0 +1,39 @@
+﻿<Window
+    x:Class="SasJobManager.Scheduler.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="clr-namespace:SasJobManager.Scheduler.Converter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SasJobManager.Scheduler"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:SasJobManager.Scheduler.View"
+    Title="SJM: Scheduler"
+    Width="1200"
+    Height="800"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <converter:SelectedJobVisibilityConverter x:Key="SelectedJobVisibilityConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <view:WaitAsync Grid.ColumnSpan="2" />
+        <view:JobControl Grid.Row="1" Grid.RowSpan="2" />
+        <view:DetailsControl
+            Grid.Row="1"
+            Grid.Column="2"
+            Visibility="{Binding SelectedJob, Converter={StaticResource SelectedJobVisibilityConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <view:RunLogControl
+            Grid.Row="2"
+            Grid.Column="2"
+            Visibility="{Binding SelectedJob, Converter={StaticResource SelectedJobVisibilityConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+    </Grid>
+
+</Window>

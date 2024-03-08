@@ -1,0 +1,101 @@
+﻿<UserControl x:Class="SasJobManager.UI.View.FileSelector"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SasJobManager.UI.View"
+             xmlns:converter="clr-namespace:SasJobManager.UI.Converter"
+             xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converter:IsVisibleConverter x:Key="IsVisibleConverter" />
+        <converter:FileNameConverter x:Key="FileNameConverter"/>
+        <converter:AiFileSelectedConverter x:Key="AiFileSelectedConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <GroupBox
+                
+                Foreground="MidnightBlue"
+                Visibility="{Binding DoesCreateBatFile, Converter={StaticResource IsVisibleConverter}}"
+                Margin="3 15 0 0"
+                HorizontalAlignment="Right">
+
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Select AI to access additional options"/>
+                    </StackPanel>
+                </GroupBox.Header>
+
+                <StackPanel>
+                    <Label>
+                        <Label.Content>
+                            <StackPanel 
+                        Background="AliceBlue"
+                        Orientation="Horizontal">
+                                <Button
+                                    Width="25"
+                                    Height="25"
+                                    VerticalAlignment="Bottom"
+                                    Command="{Binding SelectAiCommand}"
+                                    Style="{StaticResource RoundButton}"
+                                    ToolTip="Select Analysis Index">    
+                                    <Button.Content>
+                                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                            <icons:PackIconFontAwesome
+                                        Margin="0"
+                                        VerticalAlignment="Center"
+                                        Foreground="ForestGreen"
+                                        Kind="FileExcelSolid" />
+
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                                <TextBlock
+                                    Width="200"
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Ai,Converter={StaticResource FileNameConverter}}" />
+                                <Button
+                                    Margin="2,0,0,0"
+                                    Width="20"
+                                    Height="20"
+                                    VerticalAlignment="Center"
+                                    Command="{Binding ClearAiCommand}"
+                                    Style="{StaticResource RoundButton}"
+                                    ToolTip="Remove AI">
+                                    <Button.Content>
+                                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                            <icons:PackIconMaterial   
+                                                Height="13"
+                                                Width="13"
+                                        VerticalAlignment="Center"
+                                        Foreground="Red"
+                                        Kind="Cancel" />
+
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
+                        </Label.Content>
+                    </Label>
+                    <CheckBox   Margin="10,0,0,0"
+                                IsEnabled="{Binding Ai,Converter={StaticResource AiFileSelectedConverter}}"
+                                IsChecked="{Binding UseAiPrograms, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Content="Use AI to populate programs in the CSV"/>
+                    <CheckBox   Margin="10,0,0,0"
+                                IsEnabled="{Binding Ai,Converter={StaticResource AiFileSelectedConverter}}"
+                                IsChecked="{Binding DisplayProgrammersInSummary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Content="Display dev and tester in summary"/>
+                    <CheckBox   Margin="10,0,0,0"
+                                IsEnabled="{Binding UseAiPrograms}"
+                                IsChecked="{Binding UseDeriveOrder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Content="Use Derive__Order for ordering and mode"/>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,237 @@
+﻿<Window
+    x:Class="SasJobManager.UI.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="clr-namespace:SasJobManager.UI.Converter"
+    xmlns:gif="http://wpfanimatedgif.codeplex.com"
+    xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:local="clr-namespace:SasJobManager.UI.Models"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:views="clr-namespace:SasJobManager.UI.View"
+    Title="MainWindow"
+    Width="620"
+    Height="800">
+    <Window.Resources>
+        <converter:IsVisibleConverter x:Key="IsVisibleConverter" />
+        <converter:ToggleIconConverter x:Key="ToggleIconConverter" />
+        <converter:ToggleSortIconConverter x:Key="ToggleSortIconConverter" />
+        <converter:ToggleExpandedIconConverter x:Key="ToggleExpandedIconConverter" />
+        <converter:ToggleExpandedTextConverter x:Key="ToggleExpandedTextConverter" />
+        <converter:IsEnabledConverter x:Key="IsEnabledConverter"/>
+
+
+        <Style x:Key="DraggableListBoxItem" TargetType="telerik:RadListBoxItem">
+            <Setter Property="telerik:DragDropManager.AllowCapturedDrag" Value="True" />
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="600" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+
+                <StackPanel>
+                    <telerik:RadMenu Grid.ColumnSpan="4" Background="AliceBlue">
+                        <telerik:RadMenuItem Command="{Binding SubmitCommand}">
+                            <telerik:RadMenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <icons:PackIconFontAwesome Foreground="Blue" Kind="RunningSolid" />
+                                    <TextBlock Margin="3,0,0,0" Text="Submit" />
+                                </StackPanel>
+                            </telerik:RadMenuItem.Header>
+                        </telerik:RadMenuItem>
+
+                        <telerik:RadMenuItem Command="{Binding AllCpuUtilizationCommand}">
+                            <telerik:RadMenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <icons:PackIconBootstrapIcons Foreground="Blue" Kind="Cpu" />
+                                    <TextBlock Margin="3,0,0,0" Text="%CPU" />
+                                </StackPanel>
+                            </telerik:RadMenuItem.Header>
+                        </telerik:RadMenuItem>
+
+                        <telerik:RadMenuItem Command="{Binding ResizeCommand}">
+                            <telerik:RadMenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <icons:PackIconFontAwesome Foreground="Blue" Kind="{Binding IsExpanded, Converter={StaticResource ToggleExpandedIconConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Margin="3,0,0,0" Text="{Binding IsExpanded, Converter={StaticResource ToggleExpandedTextConverter}}" />
+                                </StackPanel>
+                            </telerik:RadMenuItem.Header>
+                        </telerik:RadMenuItem>
+
+                        <telerik:RadMenuItem Command="{Binding HelpCommand}">
+                            <telerik:RadMenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <icons:PackIconBoxIcons Foreground="Blue" Kind="RegularHelpCircle" />
+                                    <TextBlock Margin="3,0,0,0" Text="Help" />
+                                </StackPanel>
+                            </telerik:RadMenuItem.Header>
+                        </telerik:RadMenuItem>
+
+                    </telerik:RadMenu>
+
+                    <TextBlock
+                        Margin="5"
+                        VerticalAlignment="Center"
+                        FontSize="12"
+                        Foreground="Blue"
+                        Text="{Binding Message, NotifyOnTargetUpdated=True, UpdateSourceTrigger=PropertyChanged}"
+                        TextAlignment="Left">
+                        <TextBlock.Triggers>
+                            <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="1"
+                                            To="1"
+                                            Duration="0:0:9" />
+                                        <DoubleAnimation
+                                            BeginTime="0:0:1"
+                                            DecelerationRatio=".9"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="1"
+                                            To="0"
+                                            Duration="0:0:9" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </TextBlock.Triggers>
+                    </TextBlock>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Orientation="Vertical">
+
+
+                    <Image
+                        Height="40"
+                        HorizontalAlignment="Center"
+                        gif:ImageBehavior.AnimatedSource="Images/circle-arrow.gif"
+                        Stretch="Uniform"
+                        Visibility="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsVisibleConverter}}" />
+                </StackPanel>
+            </Grid>
+
+            <GroupBox
+                Grid.Row="1"
+                Margin="5"
+                Header="Select program location">
+                <views:FolderSelector />
+            </GroupBox>
+            <GroupBox
+                Grid.Row="2"
+                Margin="5"
+                Header="Options">
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--  Options  -->
+                    <Grid Grid.ColumnSpan="3" Margin="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition  MaxHeight="100"/>
+                            <RowDefinition  MaxHeight="100"/>
+                            <RowDefinition  />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <views:ServerPicker Grid.ColumnSpan="2" MaxHeight="200" />
+                        <views:ServerContextSelector Grid.Row="1"/>
+
+
+
+                        <StackPanel
+                            Grid.RowSpan="3"
+                            Grid.Column="3"
+                            Margin="15,0,0,0"
+                            VerticalAlignment="Center"
+                            Orientation="Vertical">
+                            <StackPanel
+                                Margin="0,0,0,3"
+                                VerticalAlignment="Top"
+                                Orientation="Horizontal">
+                                <CheckBox Margin="2" IsChecked="{Binding DoesCheckLog, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Text="Review Log" />
+                            </StackPanel>
+                            <StackPanel Margin="0,0,0,3" Orientation="Horizontal">
+                                <CheckBox Margin="2" IsChecked="{Binding DoesRecordMacros, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Text="Record Macros in AIM DB" />
+                            </StackPanel>
+                            <StackPanel Margin="0,0,0,3" Orientation="Horizontal">
+                                <CheckBox Margin="2" IsChecked="{Binding DoesResolveCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Text="Resolve SAS Code (Beta)" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox Margin="2" IsChecked="{Binding DoesNotifyOnCompletion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Text="Notify Me on Completion" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox Margin="2" IsChecked="{Binding DoesQuitOnError, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Text="Quit execution on Error (sequential/mixed modes)" />
+                            </StackPanel>
+
+                            <views:BatFileSelector Margin="0,5,0,0"  BorderBrush="DarkSlateBlue" BorderThickness="1"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </GroupBox>
+
+            <StackPanel Grid.Row="3">
+                <StackPanel Margin="3" 
+                            IsEnabled="{Binding UseAiPrograms,Converter={StaticResource IsEnabledConverter}}"
+                            Orientation="Vertical">
+                    <views:SasProgramFilter />
+                    <views:SasProgramSelector />
+                </StackPanel>
+            </StackPanel>
+
+        </Grid>
+        <StackPanel
+            Grid.Column="1"
+            Margin="0,60,0,0"
+            Visibility="{Binding IsExpanded, Converter={StaticResource IsVisibleConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+            <TextBlock
+                HorizontalAlignment="Center"
+                FontSize="12"
+                Foreground="MidnightBlue"
+                Text="Console Output" />
+            <Border
+                Margin="5"
+                Padding="3"
+                BorderBrush="LightBlue"
+                BorderThickness="1"
+                CornerRadius="5">
+
+                <ScrollViewer MaxHeight="500">
+                    <TextBlock Text="{Binding Messages, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" />
+                </ScrollViewer>
+            </Border>
+        </StackPanel>
+    </Grid>
+</Window>

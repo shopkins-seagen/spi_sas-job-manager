@@ -1,0 +1,48 @@
+            .expandChildTable:before {
+                content: '+ Findings';
+            }
+            .expandChildTable.selected:before {
+                content: '- Findings';
+            }
+            .parentRow {
+                border-left: 1px solid slategray;
+            }
+            .childTableRow {
+                display: none;
+            }
+            .childTableRow table {
+                border: 1px solid slategray;
+            }
+            .isQc {
+                display: block;
+            }
+            .sup {
+                color: green;
+                margin-left: 6px;
+                font-weight: bold;
+            }
+
+            .failQc {
+                color: red;
+            }
+            .passQc {
+                color: blue;
+            }
+            .tableBtn {
+                font-variant: small-caps;
+                width: 90px;
+            }
+            .filteredRow {
+                visibility: collapse;
+            }
+            .unfilteredRow {
+                visibility: visible;
+            }
+
+            .clean {}
+            .notice {}
+            .note {}
+            .warning {}
+            .error {}
+            .passed {}
+            .failed {}

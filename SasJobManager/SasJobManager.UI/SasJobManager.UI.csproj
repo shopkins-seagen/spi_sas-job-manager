@@ -1,0 +1,130 @@
+﻿
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>SasJobManager.UI</RootNamespace>
+    <EnableDefaultItems>False</EnableDefaultItems>
+    <ApplicationIcon>SPI5.ico</ApplicationIcon>
+    <StartupObject></StartupObject>
+    <SignAssembly>False</SignAssembly>
+    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    <DelaySign>False</DelaySign>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.5.0" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+    <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
+    <PackageReference Include="Prism.Wpf" Version="8.1.97" />
+    <PackageReference Include="Telerik.UI.for.Wpf.60.Xaml" Version="2023.1.117" />
+    <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
+  </ItemGroup>
+  
+  <ItemGroup>
+  <ApplicationDefinition Include="App.xaml">
+    <Generator>MSBuild:Compile</Generator>
+    <SubType>Designer</SubType>
+  </ApplicationDefinition>
+  <Page Include="MainWindow.xaml">
+    <Generator>MSBuild:Compile</Generator>
+    <SubType>Designer</SubType>
+  </Page>
+  <Page Include="Resources\Styles.xaml">
+    <Generator>MSBuild:Compile</Generator>
+  </Page>
+  <Page Include="View\BatFileSelector.xaml">
+    <Generator>MSBuild:Compile</Generator>
+  </Page>
+  <Page Include="View\FileSelector.xaml">
+    <Generator>MSBuild:Compile</Generator>
+  </Page>
+  <Page Include="View\FolderSelector.xaml">
+    <Generator>MSBuild:Compile</Generator>
+  </Page>
+  <Page Include="View\SasProgramFilter.xaml">
+    <Generator>MSBuild:Compile</Generator>
+  </Page>
+  <Page Include="View\SasProgramSelector.xaml">
+    <Generator>MSBuild:Compile</Generator>
+  </Page>
+  <Page Include="View\ServerContextSelector.xaml">
+    <Generator>MSBuild:Compile</Generator>
+  </Page>
+  <Page Include="View\ServerPicker.xaml">
+    <Generator>MSBuild:Compile</Generator>
+  </Page>
+  <Compile Include="App.xaml.cs">
+    <DependentUpon>App.xaml</DependentUpon>
+    <SubType>Code</SubType>
+  </Compile>
+  <Compile Include="Converter\AiFileSelectedConverter.cs" />
+  <Compile Include="Converter\CpuColorConverter.cs" />
+  <Compile Include="Converter\FileNameConverter.cs" />
+  <Compile Include="Converter\IsEnabledConverter.cs" />
+  <Compile Include="Converter\ProdServerSelectedConverter.cs" />
+  <Compile Include="Converter\IsVisibleConverter.cs" />
+  <Compile Include="Converter\StageServerSelectedConverter.cs" />
+  <Compile Include="Converter\ToggleExpandedIconConverter.cs" />
+  <Compile Include="Converter\ToggleExpandedTextConverter.cs" />
+  <Compile Include="Converter\ToggleIconConverter.cs" />
+  <Compile Include="Converter\ToggleSortIconConverter.cs" />
+  <Compile Include="MainWindow.xaml.cs">
+    <DependentUpon>MainWindow.xaml</DependentUpon>
+    <SubType>Code</SubType>
+  </Compile>
+  <Compile Include="Models\BatFileGenerator.cs" />
+  <Compile Include="Models\EnumBindingSourceExtension.cs" />
+  <Compile Include="Models\ProgramCategory.cs" />
+  <Compile Include="Models\RunMode.cs" />
+  <Compile Include="Models\SasProgramFile.cs" />
+  <Compile Include="Models\Server.cs" />
+  <Compile Include="Models\ServerContext.cs" />
+  <Compile Include="Models\SourceFileType.cs" />
+  <Compile Include="Properties\Settings.Designer.cs">
+    <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    <AutoGen>True</AutoGen>
+    <DependentUpon>Settings.settings</DependentUpon>
+  </Compile>
+  <Compile Include="Startup\Bootstrapper.cs" />
+  <Compile Include="ViewModels\MainViewModel.cs" />
+  <Compile Include="ViewModels\NotifyDataErrorInfoBase.cs" />
+  <Compile Include="ViewModels\ViewModelCommand.cs" />
+  <Compile Include="View\BatFileSelector.xaml.cs" />
+  <Compile Include="View\FileSelector.xaml.cs" />
+  <Compile Include="View\FolderSelector.xaml.cs" />
+  <Compile Include="View\SasProgramFilter.xaml.cs" />
+  <Compile Include="View\SasProgramSelector.xaml.cs" />
+  <Compile Include="View\ServerContextSelector.xaml.cs" />
+  <Compile Include="View\ServerPicker.xaml.cs" />
+</ItemGroup>
+  
+  <ItemGroup>
+    <Resource Include="Images\circle-arrow.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="SPI5.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="appsettings_ui.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\SasJobManager.Lib\SasJobManager.Lib.csproj" />
+  </ItemGroup>
+
+</Project>

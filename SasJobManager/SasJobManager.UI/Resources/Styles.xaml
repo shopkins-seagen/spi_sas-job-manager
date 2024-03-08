@@ -1,0 +1,44 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="RoundButton" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="25" />
+        <Setter Property="Width" Value="25" />
+        <Setter Property="BorderBrush" Value="MediumBlue" />
+        <Setter Property="BorderThickness" Value=".5" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="3" />
+        <Style.Resources>
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="5" />
+            </Style>
+        </Style.Resources>
+    </Style>
+    <Style x:Key="GridButton" TargetType="{x:Type Button}">
+        <Setter Property="BorderBrush" Value="MediumBlue" />
+        <Setter Property="BorderThickness" Value=".5" />
+        <Setter Property="Background" Value="AliceBlue" />
+        <Setter Property="Padding" Value="3" />
+    </Style>
+    <Style TargetType="TextBox">
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <StackPanel>
+                        <AdornedElementPlaceholder x:Name="ErrPlaceHolder" />
+                        <TextBlock
+                            FontSize="10"
+                            Foreground="Red"
+                            Text="{Binding ElementName=ErrPlaceHolder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" />
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Validation.HasError" Value="True">
+                <Setter Property="BorderBrush" Value="Red" />
+                <Setter Property="Background" Value="LightGoldenrodYellow" />
+                <Setter Property="BorderThickness" Value="2" />
+                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

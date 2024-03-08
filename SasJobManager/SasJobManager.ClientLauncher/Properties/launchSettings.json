@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SasJobManager.ClientLauncher": {
+      "commandName": "Project",
+      "commandLineArgs": "test"
+    }
+  }
+}

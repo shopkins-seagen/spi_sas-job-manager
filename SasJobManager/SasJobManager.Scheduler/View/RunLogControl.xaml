@@ -1,0 +1,93 @@
+﻿<UserControl
+    x:Class="SasJobManager.Scheduler.View.RunLogControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="clr-namespace:SasJobManager.Scheduler.Converter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:local="clr-namespace:SasJobManager.Scheduler.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:rad="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <converter:DateDisplayConverter x:Key="DateDisplayConverter" />
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <TextBlock Padding="35,3,3,3" FontSize="15">
+            <Run Foreground="MidnightBlue" Text="Run Logs for Task: " />
+            <Run
+                FontWeight="Bold"
+                Foreground="Blue"
+                Text="{Binding Path=SelectedJob.Description}" />
+        </TextBlock>
+        <Button
+            Margin="3,1,0,1"
+            HorizontalAlignment="Left"
+            Command="{Binding RefreshJobRunCommand}"
+            Style="{StaticResource RoundButton}"
+            ToolTip="Reload run logs">
+            <Button.Content>
+                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                    <icon:PackIconMaterial
+                        Margin="2"
+                        VerticalAlignment="Center"
+                        Foreground="Green"
+                        Kind="Reload" />
+                </StackPanel>
+            </Button.Content>
+        </Button>
+
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="1.2*" />
+            </Grid.ColumnDefinitions>
+            <DataGrid
+                Margin="0,0,10,10"
+                AutoGenerateColumns="False"
+                CanUserAddRows="False"
+                CanUserDeleteRows="False"
+                ItemsSource="{Binding JobRuns}"
+                SelectedItem="{Binding SelectedJobRun, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                SelectionMode="Single"
+                SelectionUnit="FullRow">
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Width="120"
+                        Binding="{Binding Started, StringFormat=\{0:dd-MMM-yy HH:mm:ss\}, UpdateSourceTrigger=PropertyChanged}"
+                        Header="Started" />
+                    <DataGridTextColumn
+                        Width="130"
+                        Binding="{Binding Completed, Converter={StaticResource DateDisplayConverter}, UpdateSourceTrigger=PropertyChanged}"
+                        Header="Completed" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding WorstFinding, UpdateSourceTrigger=PropertyChanged}"
+                        Header="Worst Finding" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <ScrollViewer Grid.Column="1">
+
+
+                <telerik:RadListBox
+                    Grid.Row="1"
+                    Margin="0,0,3,6"
+                    DisplayMemberPath="Message"
+                    ItemsSource="{Binding Path=SelectedJobRun.Messages}" />
+
+
+            </ScrollViewer>
+        </Grid>
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SasJobManager.Cli": {
+      "commandName": "Project",
+      "commandLineArgs": "-c \"O:\\Projects\\iSAFE\\iSAFE_Dev\\safety_analysis_1014\\v_work\\data\\adhoc\\_DIT_Sandbox\\pgms\\sudha\\runlists\\test.csv\"\r\n-h \"O:\\Projects\\iSAFE\\iSAFE_Dev\\safety_analysis_1014\\v_work\\data\\adhoc\\_DIT_Sandbox\\pgms\\sudha\\runlists\\test.html\"\r\n-a false\r\n-s sgsasv1.sg.seagen.com\r\n-m false\r\n\r\n"
+    }
+  }
+}

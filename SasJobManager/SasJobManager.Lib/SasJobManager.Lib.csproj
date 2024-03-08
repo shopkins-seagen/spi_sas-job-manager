@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>C:\dev\web\apps\SJM\SasJobManager\sasjobmanager-cli.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <COMReference Include="SCRIPTOLib">
+      <VersionMinor>1</VersionMinor>
+      <VersionMajor>1</VersionMajor>
+      <Guid>b4994ef2-2581-11d2-b944-00c04f81bc00</Guid>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="RestSharp" Version="108.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SasJobManager.Domain\SasJobManager.Domain.csproj" />
+    <ProjectReference Include="..\SasJobManager.ServerLib\SasJobManager.ServerLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="SASInterop">
+      <HintPath>I:\clinapp\global\sas-lib\win-app\SASInterop.dll</HintPath>
+    </Reference>
+    <Reference Include="SASIOMCommonInterop">
+      <HintPath>I:\clinapp\global\sas-lib\win-app\SASIOMCommonInterop.dll</HintPath>
+    </Reference>
+    <Reference Include="SASOManInterop">
+      <HintPath>I:\clinapp\global\sas-lib\win-app\SASOManInterop.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings_lib.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
