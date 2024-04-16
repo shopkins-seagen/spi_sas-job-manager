@@ -35,12 +35,12 @@ namespace SasJobManager.Lib.Models
         public SasProgram Program { get; set; }
 
 
-        public List<SasLogFinding> ManageLog(Array lines, Array types, SasProgram pgm)
+        public async Task<List<SasLogFinding>> ManageLog(Array lines, Array types, SasProgram pgm)
         {
             Program = pgm;
             _lines = lines;
             _types = types;
-            WriteLog();
+            await WriteLog();
 
             if (_doesCheckLog)
             {
@@ -176,15 +176,32 @@ namespace SasJobManager.Lib.Models
             }
             return false;
         }
-        private void WriteLog()
-        {
-            using (var s = new StreamWriter(Program.LogFn))
+        private async Task WriteLog()
+        {           
+            //var svc = new LogHistoryService(_cfg["url_base_log_history"], _cfg["url_log_history"]);
+            //if (File.Exists(Program.LogFn))
+            //{
+            //    await svc.Unlock(Program.LogFn);
+            //}
+
+            try
             {
-                foreach (var l in _lines)
+                using (var s = new StreamWriter(Program.LogFn))
                 {
-                    s.WriteLine(l);
+                    foreach (var l in _lines)
+                    {
+                        s.WriteLine(l);
+                    }
                 }
+            } catch (Exception ex)
+            {
+                Console.WriteLine($"ERROR: unable to write Log: {ex.Message}");
             }
+
+            //if (File.Exists(Program.LogFn))
+            //{
+            //    await svc.Lock(Program.LogFn, Environment.UserName);
+            //}
         }
 
         private void SetLogIssuePatterns()

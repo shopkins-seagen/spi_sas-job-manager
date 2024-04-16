@@ -24,7 +24,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SasJobManager.LaunchSchedul
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SasJobManager.Scheduler", "SasJobManager.Scheduler\SasJobManager.Scheduler.csproj", "{4511A552-38E8-4EDA-ADA9-4DE7D77833F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SasJobManager.Api.Tests", "SasJobManager.Api.Tests\SasJobManager.Api.Tests.csproj", "{27A9E7F9-374F-4DA2-AD27-3DEBA08E5DAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SasJobManager.Api.Tests", "SasJobManager.Api.Tests\SasJobManager.Api.Tests.csproj", "{27A9E7F9-374F-4DA2-AD27-3DEBA08E5DAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SasJobManager.Api.AclsManager", "SasJobManager.Api.AclsManager\SasJobManager.Api.AclsManager.csproj", "{47A65129-8C57-4355-AE72-37503B228873}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SasJobManager.Api.AclsManager.Test", "SasJobManager.Api.AclsManager.Test\SasJobManager.Api.AclsManager.Test.csproj", "{681B67DF-FADE-4A3F-A986-C75B15D57339}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +76,14 @@ Global
 		{27A9E7F9-374F-4DA2-AD27-3DEBA08E5DAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27A9E7F9-374F-4DA2-AD27-3DEBA08E5DAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27A9E7F9-374F-4DA2-AD27-3DEBA08E5DAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47A65129-8C57-4355-AE72-37503B228873}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47A65129-8C57-4355-AE72-37503B228873}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47A65129-8C57-4355-AE72-37503B228873}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47A65129-8C57-4355-AE72-37503B228873}.Release|Any CPU.Build.0 = Release|Any CPU
+		{681B67DF-FADE-4A3F-A986-C75B15D57339}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{681B67DF-FADE-4A3F-A986-C75B15D57339}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{681B67DF-FADE-4A3F-A986-C75B15D57339}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{681B67DF-FADE-4A3F-A986-C75B15D57339}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

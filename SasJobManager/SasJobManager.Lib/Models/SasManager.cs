@@ -302,11 +302,11 @@ namespace SasJobManager.Lib
                 allPgms = allPgms.Except(selected).ToList();
                 queue.AddRange(selected);
 
-                Parallel.ForEach(queue, pgm =>
+                Parallel.ForEach(queue, async pgm => 
                 {
                     var sas = new WorkspaceManager(Args, Cfg);
                     progress.Report($">{pgm.NameWithoutExtension()} submitted at {DateTime.Now.ToString("HH:mm:ss")}");
-                    sas.Submit(pgm);
+                    await sas.Submit(pgm);
 
                     Logger.AddRange(sas.Logger);
 
@@ -366,7 +366,7 @@ namespace SasJobManager.Lib
                 var pctMsg = Args.UseBestServer ? $"[{pct} CPU%]" : String.Empty;
                 progress.Report($">{pgm.NameWithoutExtension()} submitted on {server} {pctMsg} at {DateTime.Now.ToString("HH:mm:ss")}");
                 var sas = new WorkspaceManager(Args, Cfg);
-                sas.Submit(pgm);
+                await sas.Submit(pgm);
                 Logger.AddRange(sas.Logger);
                 if (sas.Logger.Where(x => x.IssueType == IssueType.Fatal).Count() > 0)
                 {

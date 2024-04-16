@@ -100,7 +100,7 @@ namespace SasJobManager.Lib.Models
             }
         }
 
-        public List<SasLogFinding> Submit(SasProgram pgm)
+        public async Task<List<SasLogFinding>> Submit(SasProgram pgm)
         {
 
             var response = new List<SasLogFinding>();
@@ -115,7 +115,7 @@ namespace SasJobManager.Lib.Models
                     ls.Submit(ProgramContent(pgm));
 
                     ls.FlushLogLines(5000000, out carriage, out lineTypes, out lines);
-                    response.AddRange(SasLogService.ManageLog(lines, lineTypes, pgm));
+                    response.AddRange(await SasLogService.ManageLog(lines, lineTypes, pgm));
 
                     WriteLst(ls, pgm);
 
