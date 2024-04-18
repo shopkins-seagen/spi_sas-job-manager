@@ -25,7 +25,7 @@ namespace SasJobManager.Cli.Models
         private string? _doesResolveCodeStr;
         private string? _doesCheckLogStr;
         private string? _doesNotifyOnCompletionStr;
-        private string? _useBestServerStr;
+        //private string? _useBestServerStr;
         private string? _reviewLogsOnlyStr;
         private string? _isInteractiveStr;
         private string _htmlSummaryFn;
@@ -114,7 +114,7 @@ namespace SasJobManager.Cli.Models
         {
             get => _server;
             set
-            {
+            {                
                 _server = value;
             }
         }

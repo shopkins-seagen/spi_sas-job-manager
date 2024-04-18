@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using SasJobManager.Domain;
+using SasJobManager.Lib.Service;
 using SasJobManager.ServerLib.Models;
 using System;
 using System.Collections.Generic;
@@ -156,13 +157,19 @@ namespace SasJobManager.Lib.Models
             ls.FlushListLines(1000000, out c, out lt, out l);
             if (l.Length > 0)
             {
-                using (var sw = new StreamWriter(Path.Combine(pgm.Dir(), $"{pgm.NameWithoutExtension()}.lst")))
+                var lst = Path.Combine(pgm.Dir(), $"{pgm.NameWithoutExtension()}.lst");
+
+                if (File.Exists(lst))
+                    FolderService.ToggleReadOnly(lst, false);
+
+                using (var sw = new StreamWriter(lst))
                 {
                     for (int i = 0; i < l.GetLength(0); i++)
                     {
                         sw.WriteLine(l.GetValue(i) as string);
                     }
                 }
+                FolderService.ToggleReadOnly(lst, true);
             }
         }
 

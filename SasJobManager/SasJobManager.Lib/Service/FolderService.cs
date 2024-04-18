@@ -49,5 +49,22 @@ namespace SasJobManager.Lib.Service
             var fi = File.GetAttributes(file);
             return fi.HasFlag(FileAttributes.ReadOnly);
         }
+
+        public static bool ToggleReadOnly(string file,bool makeRO)
+        {
+            try
+            {
+                if (makeRO)
+                    File.SetAttributes(file, FileAttributes.ReadOnly);
+                else
+                    File.SetAttributes(file, FileAttributes.Normal);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

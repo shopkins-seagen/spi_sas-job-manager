@@ -92,16 +92,16 @@ namespace SasJobManager.Lib
             }
 
             // All locations are not locked per CS-096
-            //remmove this try catch
             try
             {
                 foreach (var d in Args.Programs.Select(x => x.Dir()).Distinct())
                 {
-                    Console.WriteLine($"Checking {d}");
+                    Console.Write($"Confirming '{d}' is not Locked per CS-096...");
                     Tuple<bool, string> isLocked = await FolderService.IsLocked(d);
 
                     if (isLocked.Item1)
                     {
+                        Console.Write($"Folder is locked!");
                         Logger.Add(new LogEntry()
                         {
                             IssueType = IssueType.Fatal,
@@ -118,6 +118,10 @@ namespace SasJobManager.Lib
                             Source = "SasManager.ValidateArgs",
                         });
                     }
+                    if (!isLocked.Item1)
+                    {
+                        Console.Write($"Confirmed\n\n");
+                    }
                 }
             }
             catch (Exception ex)
@@ -125,23 +129,7 @@ namespace SasJobManager.Lib
 
             }
 
-            foreach (var p in Args.Programs)
-            {
-                if (File.Exists(p.LogFn))
-                {
-                    if (FolderService.IsFileProtected(p.LogFn))
-                    {
-                        Logger.Add(new LogEntry()
-                        {
-                            IssueType = IssueType.Fatal,
-                            Msg = $"The SAS log file '{p.LogFn}' is designated as Read-Only",
-                            Source = "SasManager.ValidateArgs",
-                        });
-                    }
-                }
-            }
-
-            var validServers = Cfg.GetSection($"valid_servers:servers").GetChildren().Select(x => x.Value).ToList();
+            var validServers =  Cfg.GetSection($"valid_servers:servers").GetChildren().Select(x => x.Value).ToList();
             var validContexts = Cfg.GetSection($"valid_servers:contexts").GetChildren().Select(x => x.Value).ToList();
             if (!validServers.Contains(Args.Server, StringComparer.OrdinalIgnoreCase))
             {
