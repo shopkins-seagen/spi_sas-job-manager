@@ -2,7 +2,7 @@
   "profiles": {
     "SasJobManager.Cli": {
       "commandName": "Project",
-      "commandLineArgs": "-c \"O:\\Projects\\iSAFE\\iSAFE_Dev\\safety_analysis_1014\\v_work\\data\\adhoc\\_DIT_Sandbox\\pgms\\sudha\\runlists\\test.csv\"\r\n-h \"O:\\Projects\\iSAFE\\iSAFE_Dev\\safety_analysis_1014\\v_work\\data\\adhoc\\_DIT_Sandbox\\pgms\\sudha\\runlists\\test.html\"\r\n-a false\r\n-s sgsasv1.sg.seagen.com\r\n-m false\r\n\r\n"
+      "commandLineArgs": "-p \"O:\\stat_prog_infra\\testing\\sjm\\secure_log\\v3_0\\data\\adam\\pgms\\test.sas\" \"O:\\stat_prog_infra\\testing\\sjm\\secure_log\\v3_0\\data\\adam\\pgms\\test1.sas\"\r\n-h \"O:\\stat_prog_infra\\testing\\sjm\\secure_log\\v3_0\\data\\adam\\pgms\\test.html\"\r\n-g \"myvar1:%nrstr(&nbsp;)!myvar2:O:\\this\\is\\a\\test!myvar3:&sysdate9\"\r\n-a true\r\n-s stage\r\n-m false\r\n\r\n"
     }
   }
 }

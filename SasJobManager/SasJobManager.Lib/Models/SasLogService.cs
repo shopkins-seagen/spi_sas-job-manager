@@ -1,5 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Drawing;
 using Microsoft.Extensions.Configuration;
+using SasJobManager.Lib.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace SasJobManager.Lib.Models
         private Dictionary<Regex, SasFindingType> _patterns;
         private bool _doesCheckLog;
         private bool _includesAutoQc;
-        public SasLogService(IConfigurationRoot cfg, bool doesCheckLog,bool includesAutoQc=false)
+        public SasLogService(IConfigurationRoot cfg, bool doesCheckLog, bool includesAutoQc = false)
         {
             _cfg = cfg;
             _doesCheckLog = doesCheckLog;
@@ -35,8 +36,9 @@ namespace SasJobManager.Lib.Models
         public SasProgram Program { get; set; }
 
 
-        public List<SasLogFinding> ManageLog(Array lines, Array types, SasProgram pgm)
+        public async Task<List<SasLogFinding>> ManageLog(Array lines, Array types, SasProgram pgm)
         {
+
             Program = pgm;
             _lines = lines;
             _types = types;
@@ -46,6 +48,8 @@ namespace SasJobManager.Lib.Models
             {
                 CheckLog(pgm);
             }
+
+
             return SasLogFindings;
         }
 
@@ -82,6 +86,8 @@ namespace SasJobManager.Lib.Models
                     }
                 }
             }
+
+
         }
         public SasLog CheckLogFile(SasProgram pgm)
         {
@@ -112,11 +118,11 @@ namespace SasJobManager.Lib.Models
                     {
                         isMatched = true;
                     }
-                    
+
                     if (_includesAutoQc && !isMatched)
                     {
                         sasLog.IsQcPgm = true;
-                        ReviewLineQc(SasFindingType.QC, line, i,ref sasLog);
+                        ReviewLineQc(SasFindingType.QC, line, i, ref sasLog);
                     }
                 }
             }
@@ -128,7 +134,7 @@ namespace SasJobManager.Lib.Models
             sasLog.Findings.AddRange(SasLogFindings);
 
             return sasLog;
-            
+
         }
 
         private bool ReviewLineQc(SasFindingType type, string line, int i)
@@ -148,7 +154,7 @@ namespace SasJobManager.Lib.Models
         }
 
         // For log review only functionality
-        private bool ReviewLineQc(SasFindingType type, string line, int i,ref SasLog log)
+        private bool ReviewLineQc(SasFindingType type, string line, int i, ref SasLog log)
         {
             foreach (var r in _patterns.Where(x => x.Value == type))
             {
@@ -178,12 +184,24 @@ namespace SasJobManager.Lib.Models
         }
         private void WriteLog()
         {
-            using (var s = new StreamWriter(Program.LogFn))
+            try
             {
-                foreach (var l in _lines)
+                if (File.Exists(Program.LogFn))
                 {
-                    s.WriteLine(l);
+                    FolderService.ToggleReadOnly(Program.LogFn, false);
                 }
+                using (var s = new StreamWriter(Program.LogFn))
+                {
+                    foreach (var l in _lines)
+                    {
+                        s.WriteLine(l);
+                    }
+                }
+                FolderService.ToggleReadOnly(Program.LogFn, true);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ERROR: unable to write Log: {ex.Message}");
             }
         }
 

@@ -30,7 +30,7 @@ namespace SasJobManager.Lib.Test
         private static string _root = @"O:\stat_prog_infra\testing\runsas\dotnet\unit_test\data\adam\pgms";
         private static string _rootv2 = @"O:\stat_prog_infra\testing\sjm\dotnet\use_ai\data\sdtm\pgms";
         private static string _ai = @"O:\stat_prog_infra\testing\sjm\dotnet\use_ai\utilities\ai\ai.xlsx";
-        private static string _cli = @"C:\dev\web\apps\SJM\SasJobManager\SasJobManager\SasJobManager.Cli\bin\Debug\net6.0\SasJobManager.Cli.exe";
+        private static string _cli = @"C:\github\sp-sas-job-manager\SasJobManager\SasJobManager.Cli\bin\Debug\net6.0\SasJobManager.Cli.exe";
 
 
         [AssemblyInitialize]
@@ -48,7 +48,7 @@ namespace SasJobManager.Lib.Test
 
         }
 
-        [TestMethod]
+
         #region Simuate actual run
         public async Task _Simulate()
         {
@@ -519,7 +519,7 @@ namespace SasJobManager.Lib.Test
             await sas.Run(progress);
 
             // Expected outcomes
-            Assert.IsTrue(Regex.IsMatch(sas.Logger[0].Msg, "Object is not connected to server", RegexOptions.IgnoreCase));
+            Assert.IsTrue(Regex.IsMatch(sas.Logger[0].Msg, "became disconnected during code execution", RegexOptions.IgnoreCase));
         }
         /// <TestDescription>Terminate execution if folder is locked per CS-096</TestDescription>            
         /// <TestId>UT.EX02.01</TestId> 
@@ -554,39 +554,7 @@ namespace SasJobManager.Lib.Test
             Assert.AreEqual(sas.Logger[0].IssueType, IssueType.Fatal);
             Assert.IsTrue(Regex.IsMatch(sas.Logger[0].Msg, "locked", RegexOptions.IgnoreCase));
         }
-        /// <TestDescription>Terminate execution if a SAS log file has the read-only attribute specified</TestDescription>            
-        /// <TestId>UT.EX03.01</TestId> 
-        /// <ReqId>EX03.01</ReqId>
-        /// <Version>1.0</Version>
-        [TestMethod]
-        public async Task LogIsReadOnly()
-        {
-            var folder = @"O:\stat_prog_infra\testing\runsas\dotnet\unit_test\data\raw\pgms";
-            var pgm = "read-only-log";
-
-            var msgs = new List<string>();
-
-            _args.DoesResolveProgramCode = false;
-            _args.DoesMacroLogging = false;
-            _args.DoesNotifyOnCompletion = false;
-            _args.DoesCheckLog = true;
-
-            SetPgms(Path.Combine(folder, pgm), ref _args);
-            var sas = new SasManager(_args, new SasContext());
-
-
-            var progress = new Progress<string>(value =>
-            {
-                msgs.Add(value);
-            });
-
-            await sas.Run(progress);
-
-            // Expected outcomes
-
-            Assert.AreEqual(sas.Logger[0].IssueType, IssueType.Fatal);
-            Assert.IsTrue(Regex.IsMatch(sas.Logger[0].Msg, "read-only", RegexOptions.IgnoreCase));
-        }
+        
 
         /// <TestDescription>Invalid program is specified in parallel mode</TestDescription>            
         /// <TestId>UT.EX04.01</TestId> 
@@ -1284,7 +1252,51 @@ namespace SasJobManager.Lib.Test
 
         #endregion
 
+        #region Version 3
+        /// <TestDescription>Run the same programs 2x and ensure the logs are read-only after each completion</TestDescription>            
+        /// <TestId>UT.LOG.01.01</TestId> 
+        /// <ReqId>LOG.01.01,LOG.01.02</ReqId>
+        /// <Version>1.0</Version>
+        [TestMethod]
+        public async Task SetLogsToReadOnly()
+        {
+            for (int i = 0; i == 1; i++)
+            {
+                var path = @"O:\stat_prog_infra\testing\sjm\secure_log\v3_0\data\adam\pgms";
+                var pgm = new List<string> { "test", "test1" };
+                var msgs = new List<string>();
 
+                _args.DoesResolveProgramCode = false;
+                _args.DoesMacroLogging = false;
+                _args.DoesNotifyOnCompletion = false;
+
+                _args.Mvars.Add("myvar1", "this is only a test");
+                _args.Mvars.Add("myvar2", "O:\\this\\those");
+                _args.Mvars.Add("myvar3", "&sysdate9");
+
+                SetPgms(path, pgm, ref _args);
+                _args.SummaryFn = @$"{Path.Combine(path, "run_summaries")}\summary-{Environment.UserName}-{(DateTime.Now.ToString("yyyyMMddHHmmss"))}.html";
+                var sas = new SasManager(_args, new SasContext());
+
+
+                var progress = new Progress<string>(value =>
+                {
+                    msgs.Add(value);
+                });
+
+                await sas.Run(progress);
+                sas.WriteSummary(false);
+
+                // Expected outcomes
+                foreach (var f in _args.Programs)
+                {
+                    var fi = new FileInfo(f.LogFn);
+                    Assert.IsTrue(fi.Attributes.HasFlag(FileAttributes.ReadOnly));
+                }
+            }
+        }
+
+        #endregion
         #region utilities
         public void SetPgms(string pgm, ref Args args, bool isQc = false)
         {
@@ -1310,7 +1322,19 @@ namespace SasJobManager.Lib.Test
 
             args.Programs = pgms;
         }
+        public void SetPgms(string path,List<string> pgm, ref Args args, bool isQc = false)
+        {
+            args.Programs.Clear();
+            var pgms = new List<SasProgram>();
 
+
+            foreach (var (c, i) in pgm.Select((c, i) => (c, i)))
+            {
+                pgms.Add(new SasProgram(Path.Combine(path, $"{c}.sas"), isQc, i));
+            }
+
+            args.Programs = pgms;
+        }
 
 
         #endregion

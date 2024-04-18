@@ -1,7 +1,6 @@
 ﻿
 using CommandLine;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using SasJobManager.Cli.Models;
 using SasJobManager.Domain;
 using SasJobManager.Lib;
@@ -17,11 +16,13 @@ namespace SasJobManager.Cli
         private static IConfigurationRoot _cfg;
         private static CmdArgs _args;
         private static Regex _mvarRgx;
+     
 
         static void Main(string[] args)
         {
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
             LoadConfig();
+
             bool isInteractive=true;
 
             Console.WriteLine("Starting the SAS Workspace...");
@@ -136,7 +137,7 @@ namespace SasJobManager.Cli
         {
             var args = new Args()
             {
-                Server = _args.Server ?? _cfg["server"],
+                Server = SetServer(_args.Server),
                 Context = _args.Context ?? _cfg["context"],
                 BaseMetricsUrl = _cfg["cpu_usage_url_base"],
                 MetricsUrl = _cfg["cpu_usage_url"],
@@ -179,18 +180,18 @@ namespace SasJobManager.Cli
 
             if (!string.IsNullOrEmpty(_args.Mvars))
             {
-                foreach(var m in _args.Mvars.Split(';',StringSplitOptions.RemoveEmptyEntries))
+                foreach(var m in _args.Mvars.Split('!',StringSplitOptions.RemoveEmptyEntries))
                 {
-                    var v = m.Split(':');
-                    if (v.Length == 2)
+                    var dlm = m.IndexOf(':');
+                    if (dlm>=0)
                     {
-                        if (_mvarRgx.IsMatch(v[0]))
+                        if (_mvarRgx.IsMatch(m.Substring(0,dlm)))
                         {
-                            args.Mvars[v[0]]= v[1];
+                            args.Mvars[m.Substring(0,dlm)]= m.Substring(dlm+1);
                         }
                         else
                         {
-                            _args.Logger.Add(new LogEntry($"Invalid name for macro variable '{v[0]}'", IssueType.Fatal, "BuildArgs"));
+                            _args.Logger.Add(new LogEntry($"Invalid name for macro variable in expression '{m}'", IssueType.Fatal, "BuildArgs"));
                         }           
                     }
                     else
@@ -201,6 +202,20 @@ namespace SasJobManager.Cli
             }
 
             return args;
+        }
+
+        private static string SetServer(string? s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return _cfg["server"];
+                       
+            var serverAlias = _cfg.GetSection("aliases").GetChildren().OrderBy(x => x.Key).Select(x => x.Value).ToList();
+            if (serverAlias.IndexOf(s.ToLower())>=0)
+            {
+                var servers = _cfg.GetSection("servers").GetChildren().OrderBy(x => x.Key).Select(x => x.Value).ToList();
+                return servers[serverAlias.IndexOf(s.ToLower())];
+            }
+            return s;            
         }
 
         private static void CheckAi(ref Args args)
