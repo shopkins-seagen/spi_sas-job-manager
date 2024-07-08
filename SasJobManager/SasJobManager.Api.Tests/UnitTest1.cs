@@ -155,6 +155,75 @@ namespace SasJobManager.Api.Tests
             SwapBat("submit-original.bat");
         }
 
+        /// <TestDescription></TestDescription>            
+        /// <TestId>UT.API.0.03</TestId> 
+        /// <ReqId>API0.01</ReqId>
+        /// <Version>2.1</Version>
+        [Fact]
+        public async Task Post_RunLauncher()
+        {
+            var root = @"O:\stat_prog_infra\testing\sjm\clientlauncher\v01\data\adam\pgms";
+
+            var args = new ClientArgs()
+            {
+                Name = Path.Combine(root,"test.bat"),
+                User = "shopkins"
+            };
+            var json = JsonConvert.SerializeObject(args);
+
+            await using var application = new WebApplicationFactory<Program>();
+
+            HttpContent content = new StringContent(json);
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+            var client = application.CreateClient();
+
+            client.DefaultRequestHeaders
+                .Accept
+                .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+
+            var response = await client.PostAsync("/api/launch", content);
+            var msg = response.Content.ReadAsStringAsync().Result;
+
+
+      
+        }
+        /// <TestDescription></TestDescription>            
+        /// <TestId>UT.API.0.03</TestId> 
+        /// <ReqId>API0.01</ReqId>
+        /// <Version>2.1</Version>
+        [Fact]
+        public async Task Post_RunLauncherFail()
+        {
+            var root = @"O:\stat_prog_infra\testing\sjm\clientlauncher\v01\data\adam\pgms";
+
+            var args = new ClientArgs()
+            {
+                Name = Path.Combine(root, "test.bat"),
+                User = "tbowman"
+            };
+            var json = JsonConvert.SerializeObject(args);
+
+            await using var application = new WebApplicationFactory<Program>();
+
+            HttpContent content = new StringContent(json);
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+            var client = application.CreateClient();
+
+            client.DefaultRequestHeaders
+                .Accept
+                .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+
+            var response = await client.PostAsync("/api/launch", content);
+            var msg = response.Content.ReadAsStringAsync().Result;
+
+
+
+        }
+
         private void SwapBat(string fn)
         {
             File.Copy(Path.Combine(_loc, fn), Path.Combine(_loc, "submit.bat"), true);

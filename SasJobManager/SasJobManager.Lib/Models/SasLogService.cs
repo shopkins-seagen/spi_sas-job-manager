@@ -190,13 +190,17 @@ namespace SasJobManager.Lib.Models
                 {
                     FolderService.ToggleReadOnly(Program.LogFn, false);
                 }
+                var dt = DateTime.Now;
                 using (var s = new StreamWriter(Program.LogFn))
                 {
                     foreach (var l in _lines)
                     {
                         s.WriteLine(l);
                     }
+                    s.Write($"\nNOTE: [SJM=>AIM]|{FileService.Crypt(dt.ToString("ddMMyyyy:HH:mm:ss"))}");
                 }
+                
+                FileService.SetFileAttrs(Program.LogFn, dt);
                 FolderService.ToggleReadOnly(Program.LogFn, true);
             }
             catch (Exception ex)
@@ -205,8 +209,7 @@ namespace SasJobManager.Lib.Models
             }
         }
 
-        private void SetLogIssuePatterns()
-        {
+        private void SetLogIssuePatterns()        {
             foreach (var v in _cfg.GetSection($"cfg_lists:notes").GetChildren().Select(x => x.Value).ToList())
             {
                 _patterns[new Regex(v, RegexOptions.IgnoreCase)] = SasFindingType.Note;

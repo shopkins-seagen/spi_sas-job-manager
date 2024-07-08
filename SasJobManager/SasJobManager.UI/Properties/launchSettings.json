@@ -2,7 +2,7 @@
   "profiles": {
     "SasJobManager.UI": {
       "commandName": "Project",
-      "commandLineArgs": "O:\\stat_prog_infra\\testing\\sjm\\dotnet\\use_ai\\data\\sdtm\\pgms\\ae.sas"
+      "commandLineArgs": "O:\\Projects\\Training\\sjm\\automation\\v1\\data\\adam\\pgms"
     }
   }
 }

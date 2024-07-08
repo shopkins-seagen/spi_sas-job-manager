@@ -4,5 +4,6 @@
     {
         public string Name { get; set; }
         public string User { get; set; }
+        public string? Smtp { get; set; }
     }
 }

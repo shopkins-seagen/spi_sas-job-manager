@@ -8,6 +8,9 @@ using SasJobManager.Lib.Models;
 using SasJobManager.ServerLib.Models;
 using System.Text.RegularExpressions;
 
+using System.Security.Cryptography;
+using System.Text;
+
 namespace SasJobManager.Cli
 {
 
@@ -20,6 +23,7 @@ namespace SasJobManager.Cli
 
         static void Main(string[] args)
         {
+
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
             LoadConfig();
 
@@ -46,12 +50,15 @@ namespace SasJobManager.Cli
                         var sas = new SasManager(sasArgs, new SasContext());
                         CheckLog(sas.Logger);
 
-                        var progress = new Progress<string>(value =>
-                        {
-                            Console.WriteLine(value);
-                        });
                         try
                         {
+                            var progress = new Progress<string>(value =>
+                            {
+                                Console.WriteLine(value);
+                            });
+
+                        //try
+                        //{
                             sas.Run(progress).GetAwaiter().GetResult();
                             sas.WriteSummary(sasArgs.IsInteractive);
                         }
@@ -121,6 +128,8 @@ namespace SasJobManager.Cli
            
             });
         }
+
+
 
         private static void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
         {

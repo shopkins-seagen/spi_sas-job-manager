@@ -47,6 +47,7 @@ namespace ServerManager.Api.Controllers
                     cmd.RunBatCmd();
                    
                 });
+                
             }
             catch(Exception ex)
             {

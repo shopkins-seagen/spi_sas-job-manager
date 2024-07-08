@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SasJobManager.ClientJobLauncher": {
+      "commandName": "Project",
+      "commandLineArgs": "\"O:\\stat_prog_infra\\testing\\sjm\\clientlauncher\\v01\\data\\adam\\pgms\\test.bat\""
+    }
+  }
+}

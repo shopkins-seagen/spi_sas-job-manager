@@ -100,22 +100,44 @@ namespace SasJobManager.Lib.Models
                 Logger.Add(new LogEntry { IssueType = IssueType.Fatal, Msg = ex.Message, Source = "SasServer.Connect" });
             }
         }
-
+       
         public async Task<List<SasLogFinding>> Submit(SasProgram pgm)
         {
 
             var response = new List<SasLogFinding>();
-            var ls = _workspace.LanguageService;
-            pgm.Started = DateTime.Now;
+
+            // Check workspace is not disconnected
+            try
+            {
+                if (!IsConnected)
+                {
+                    Logger.Add(new LogEntry { IssueType = IssueType.Note, Msg = $"Workspace disconnected. Attempting to reconnect" });
+                    Connect();
+                }
+            }
+            catch(Exception ex)
+            {
+                Logger.Add(new LogEntry { IssueType = IssueType.Fatal, Msg = $"Unable to reconnect Workspace. Failed at program: '{pgm.Name}'", Source = "SasServer.Submit" });
+                return response;
+
+            }
+            if (_workspace==null) 
+            {
+                Logger.Add(new LogEntry { IssueType = IssueType.Fatal, Msg = $"Workspace has become disconnected trying to submit {pgm.Name}", Source = "SasServer.Submit" });
+                return response;
+            }
+
 
             if (IsConnected)
             {
+                pgm.Started = DateTime.Now;
+                var ls = _workspace.LanguageService;
                 try
                 {
                 
                     ls.Submit(ProgramContent(pgm));
 
-                    ls.FlushLogLines(5000000, out carriage, out lineTypes, out lines);
+                    ls.FlushLogLines(int.MaxValue, out carriage, out lineTypes, out lines);
                     response.AddRange(await SasLogService.ManageLog(lines, lineTypes, pgm));
 
                     WriteLst(ls, pgm);
