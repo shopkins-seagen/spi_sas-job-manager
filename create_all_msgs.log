@@ -1,0 +1,298 @@
+1                                                          The SAS System                         04:46 Wednesday, November 27, 2024
+
+NOTE: Copyright (c) 2016 by SAS Institute Inc., Cary, NC, USA. 
+NOTE: SAS (r) Proprietary Software 9.4 (TS1M7) 
+      Licensed to SEAGEN INC, Site 70197618.
+NOTE: This session is executing on the X64_SRV19  platform.
+
+
+
+NOTE: Analytical products:
+      
+      SAS/STAT 15.2
+
+NOTE: Additional host information:
+
+ X64_SRV19 WIN 10.0.20348  Server
+
+NOTE: SAS Initialization used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.03 seconds
+      
+NOTE: The autoexec file, E:\SASConfig\Lev1\SASApp94\WorkspaceServer\autoexec.sas, was executed at server initialization.
+1          %let _apparg=O:\stat_prog_infra\testing\sjm\dotnet\v2\data\adam\pgms;
+2          %let sasprogramfile=O:\stat_prog_infra\testing\sjm\dotnet\v2\data\adam\pgms\create_all_msgs.sas;
+3          
+4          
+5          /*------------------------------- Seagen Standard Program Header [v2.0] -------------------------
+6          | Program : O:\stat_prog_infra\testing\sjm\dotnet\v2\data\adam\pgms\create_all_msgs.sas
+7          | Software: Windows SAS 9.4
+8          | Purpose : Generate the CREATE_ALL_MSGS ADaM data set
+9          |
+10         | Input   :
+11         | Output  :
+12         |
+13         | -------------------------------------- Program History ----------------------------------------
+14         | Date       User ID   Description
+15         | ---------  --------  --------------------------------------------------------------------------
+16         | 21JUN2023  shopkins  Copied from O:\stat_prog_infra\testing\runsas\dotnet\unit_test
+17         \ ---------------------------------------------------------------------------------------------*/
+18         
+19         %include "init.sas";
+*---------------------------------------------------------------------*
+|  Runtime details
+*----------------------------------------------------------------------*
+* User: shopkins
+* Machine: SEASASAP01V
+* Date: 27NOV24:04:46
+* SAS Version: 9.4 WIN X64_SRV19
+* OS Version: X64_SRV19
+*----------------------------------------------------------------------*
+NOTE: Libref A was successfully assigned as follows: 
+      Engine:        V9 
+                                                                                                                         The SAS System
+
+      Physical Name: O:\stat_prog_infra\testing\sjm\dotnet\v2\data\adam
+NOTE: Libref B was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: O:\stat_prog_infra\testing\sjm\dotnet\v2\biostats\data
+NOTE: Libref CDM was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: E:\SASConfig\Lev1\SASApp94\
+NOTE: Libref OUT refers to the same physical library as A.
+NOTE: Libref OUT was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: O:\stat_prog_infra\testing\sjm\dotnet\v2\data\adam
+NOTE: Libref PA was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: O:\stat_prog_infra\testing\sjm\dotnet\v2\data\profile_analysis
+NOTE: Libref PR was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: O:\stat_prog_infra\testing\sjm\dotnet\v2\data\profile_raw
+NOTE: Libref R was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: O:\stat_prog_infra\testing\sjm\dotnet\v2\data\raw
+NOTE: Libref S was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: O:\stat_prog_infra\testing\sjm\dotnet\v2\data\sdtm
+NOTE: Libref UP refers to the same physical library as OUT.
+NOTE: Libref UP was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: O:\stat_prog_infra\testing\sjm\dotnet\v2\data\adam
+NOTE: Libref T was successfully assigned as follows: 
+      Levels:           4
+      Engine(1):        V9 
+      Physical Name(1): O:\stat_prog_infra\testing\sjm\dotnet\v2\utilities\templates
+      Engine(2):        V9 
+      Physical Name(2): O:\stat_prog_infra\testing\sjm\utilities\templates
+      Engine(3):        V9 
+      Physical Name(3): O:\stat_prog_infra\testing\utilities\templates
+      Engine(4):        V9 
+      Physical Name(4): O:\projects\utilities\templates
+NOTE: Libref MEDDRA was successfully assigned as follows: 
+      Levels:           4
+      Engine(1):        V9 
+      Physical Name(1): O:\stat_prog_infra\testing\sjm\dotnet\v2\utilities\meddra
+      Engine(2):        V9 
+      Physical Name(2): O:\stat_prog_infra\testing\sjm\utilities\meddra
+      Engine(3):        V9 
+      Physical Name(3): O:\stat_prog_infra\testing\utilities\meddra
+      Engine(4):        V9 
+      Physical Name(4): O:\projects\utilities\meddra
+NOTE: Libref WHODRUG was successfully assigned as follows: 
+      Levels:           4
+      Engine(1):        V9 
+                                                                                                                         The SAS System
+
+      Physical Name(1): O:\stat_prog_infra\testing\sjm\dotnet\v2\utilities\whodrug
+      Engine(2):        V9 
+      Physical Name(2): O:\stat_prog_infra\testing\sjm\utilities\whodrug
+      Engine(3):        V9 
+      Physical Name(3): O:\stat_prog_infra\testing\utilities\whodrug
+      Engine(4):        V9 
+      Physical Name(4): O:\projects\utilities\whodrug
+NOTE: Libref L was successfully assigned as follows: 
+      Levels:           12
+      Engine(1):        V9 
+      Physical Name(1): O:\stat_prog_infra\testing\sjm\dotnet\v2\utilities\lookups
+      Engine(2):        V9 
+      Physical Name(2): O:\stat_prog_infra\testing\sjm\utilities\lookups
+      Engine(3):        V9 
+      Physical Name(3): O:\stat_prog_infra\testing\utilities\lookups
+      Engine(4):        V9 
+      Physical Name(4): O:\projects\utilities\lookups
+      Engine(5):        V9 
+      Physical Name(5): O:\stat_prog_infra\testing\sjm\dotnet\v2\utilities\meddra
+      Engine(6):        V9 
+      Physical Name(6): O:\stat_prog_infra\testing\sjm\utilities\meddra
+      Engine(7):        V9 
+      Physical Name(7): O:\stat_prog_infra\testing\utilities\meddra
+      Engine(8):        V9 
+      Physical Name(8): O:\projects\utilities\meddra
+      Engine(9):        V9 
+      Physical Name(9): O:\stat_prog_infra\testing\sjm\dotnet\v2\utilities\whodrug
+      Engine(10):        V9 
+      Physical Name(10): O:\stat_prog_infra\testing\sjm\utilities\whodrug
+      Engine(11):        V9 
+      Physical Name(11): O:\stat_prog_infra\testing\utilities\whodrug
+      Engine(12):        V9 
+      Physical Name(12): O:\projects\utilities\whodrug
+NOTE: Libref LIBRARY was successfully assigned as follows: 
+      Levels:           4
+      Engine(1):        V9 
+      Physical Name(1): O:\stat_prog_infra\testing\sjm\dotnet\v2\utilities\formats
+      Engine(2):        V9 
+      Physical Name(2): O:\stat_prog_infra\testing\sjm\utilities\formats
+      Engine(3):        V9 
+      Physical Name(3): O:\stat_prog_infra\testing\utilities\formats
+      Engine(4):        V9 
+      Physical Name(4): O:\projects\utilities\formats
+NOTE: Libref S_PLUS was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: O:\stat_prog_infra\testing\sjm\dotnet\v2\data\sdtm\sdtm_plus
+NOTE: %INCLUDE (level 4) file O:\projects\utilities\tools\init_dept.sas is file O:\projects\utilities\tools\init_dept.sas.
+485       +/*--------------------------- Seattle Genetics Standard Program Header ---------------------------*
+486       +|         Program Name: init_dept.sas
+487       +|  Operating System(s): Windows
+                                                                                                                         The SAS System
+
+488       +|          SAS Version: SAS 9.x
+489       +|               Author: shopkins
+490       +|              Purpose: Enables SPI to define elements of SAS environment dynamically through the inclusion of this file in env.sas
+491       +          Dependencies: Analysis must be created/updated using >= ALM 3.2.3
+492       +|
+493       +|  Inputs Path\Name(s):
+494       +|
+495       +| Outputs Path\Name(s):
+496       +|
+497       +|------------------------------ Post-Testing Modifications History ------------------------------
+498       +|  Mod. Date   User Name      Modification
+499       +|  5May2021    shopkins       Creation
+500       +| 15DEc2021    shopkins       updated name of util_api_base
+501       +| 26MAY2022    atella         Added new macro variable for emdash
+502       +| 13NOV2023    atella         Added proc fontreg
+503       +| 15NOV2023    atella         Added optons fmterr to make the options consistent between EG and batch
+504       +|------------------------------------------------------------------------------------------------*/
+505       +
+506       +*------------------------------------------------------------------------*
+507       +| System options
+508       +*------------------------------------------------------------------------*;
+509       +options compress=yes;
+510       +
+511       +*------------------------------------------------------------------------*
+512       +| Base URL for SP Utility API site
+513       +*------------------------------------------------------------------------*;
+514       +%global util_api_base _emdash;
+515       +%let util_api_base = http://seasasap01t:9010;
+516       +%let _emdash       = (*ESC*){Unicode 2014};
+517       +
+518       +*--- Please remove after the prod sever is updated ---;
+519       +proc fontreg msglevel=none;
+520       +   fontpath "C:\Windows\Fonts";
+521       +run;
+
+NOTE: PROCEDURE FONTREG used (Total process time):
+      real time           0.45 seconds
+      cpu time            0.45 seconds
+      
+
+522       +
+523       +options fmterr;
+NOTE: %INCLUDE (level 4) ending.
+NOTE: %INCLUDE (level 3) resuming.
+NOTE: %INCLUDE (level 4) file O:\stat_prog_infra\testing\sjm\dotnet\v2\utilities\tools\init_supp.sas is file O:\stat_prog_infra\testing\sjm\dotnet\v2\utilities\tools\init_supp.sas.
+524       +/*------------------------------- Seagen Standard Program Header [v1.0] -------------------------
+525       +| Program : O:\stat_prog_infra\testing\runsas\dotnet\unit_test\utilities\tools\init_supp.sas
+526       +| Software: Windows SAS 9.4
+527       +| Purpose : Provides an area for users to declare custom SAS initialization elements.
+528       +|           The file is automatically included at the end of initialization.
+                                                                                                                         The SAS System
+
+529       +|
+530       +| Input   :
+531       +| Output  :
+532       +|
+533       +| -------------------------------------- Program History ----------------------------------------
+534       +| Date       User ID   Description
+535       +| ---------  --------  --------------------------------------------------------------------------
+536       +| 27MAR2023  shopkins  Auto-generated by ALM
+537       +\----------------------------------------------------------------------------------------------*/
+538       +
+539       +
+540       +*---------------------------------------------------------------------*
+541       +| System Options
+542       +*---------------------------------------------------------------------*;
+543       +
+544       +*---------------------------------------------------------------------*
+545       +| Global macro variables - YOU MUST DECLARE MACRO VARIABLE USING %GLOBAL!
+546       +*---------------------------------------------------------------------*;
+547       +%let debug=N;
+548       +
+549       +*---------------------------------------------------------------------*
+550       +| Librefs
+551       +*---------------------------------------------------------------------*;
+552       +
+553       +*---------------------------------------------------------------------*
+554       +| DATA steps or PROC SQL code to created analysis-level objects
+555       +*---------------------------------------------------------------------*;
+556       +
+557       +*---------------------------------------------------------------------*
+558       +| Macro calls
+559       +*---------------------------------------------------------------------*;
+NOTE: %INCLUDE (level 4) ending.
+NOTE: %INCLUDE (level 3) resuming.
+NOTE: %INCLUDE (level 3) ending.
+NOTE: %INCLUDE (level 2) resuming.
+NOTE: %INCLUDE (level 2) ending.
+NOTE: %INCLUDE (level 1) resuming.
+560       +
+NOTE: %INCLUDE (level 1) ending.
+561        
+562        filename j "&currdir.\msgs.json";
+563        libname js JSON fileref=j;
+NOTE: JSON data is only read once.  To read the JSON again, reassign the JSON LIBNAME.
+NOTE: Libref JS was successfully assigned as follows: 
+      Engine:        JSON 
+      Physical Name: O:\stat_prog_infra\testing\sjm\dotnet\v2\data\adam\pgms\msgs.json
+564        
+565        data _null_;
+566         set js.notes;
+567         array _notes[*] note:;
+                                                                                                                         The SAS System
+
+568         do i = 1 to dim(_notes);
+569            putlog "NOT" "E: " _notes[i];
+570         end;
+571        run;
+
+NOTE: UNINITIALIZED
+NOTE: REPEATS OF BY VALUES
+NOTE: W.D FORMAT
+NOTE: ASSUMING THE SYMBOL
+NOTE: VALUES HAVE BEEN CONVERTED TO
+NOTE: MISSING VALUES WERE GENERATED AS A RESULT
+NOTE: DIVISION BY ZERO DETECTED
+NOTE: OUTSIDE THE AXIS RANGE
+NOTE: INVALID ARGUMENT TO FUNCTION
+NOTE: MATHEMATICAL OPERATIONS COULD NOT BE PERFORMED
+NOTE: INVALID DATA
+NOTE: MEANING OF AN IDENTIFIER
+NOTE: There were 1 observations read from the data set JS.NOTES.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+572        
+573        %put %str(ERR)OR: this is only a test;
+ERROR: this is only a test
+574        %put %str(WARN)ING: this is another test;
+WARNING: this is another test
+575        %put %str(ERR)OR 202-322: The option or parameter is not recognized;
+ERROR 202-322: The option or parameter is not recognized
+576        %put %str(WARN)ING 122-999: message with code;
+WARNING 122-999: message with code
+577        %put %str(NOT)ICE: this is not an error;
+NOTICE: this is not an error
+
+NOTE: [SJM=>AIM]|YmKFKB12q8LXoWoDBE1R9aktqYQ0XVTxo44K5AwHS6a5PRmKBQVKSA==

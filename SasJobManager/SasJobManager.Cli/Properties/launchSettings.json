@@ -2,7 +2,7 @@
   "profiles": {
     "SasJobManager.Cli": {
       "commandName": "Project",
-      "commandLineArgs": "-c \"O:\\Projects\\Tucatinib\\SGNTUC-024\\csr\\production\\utilities\\admin\\sjm_sdtm_source_pgms.csv\"\r\n-h \"O:\\Projects\\Tucatinib\\SGNTUC-024\\csr\\production\\utilities\\admin\\test.html\"\r\n-s prod\r\n-a false\r\n-m false\r\n\r\n"
+      "commandLineArgs": "-c \"O:\\Data Management\\ae_recon\\data\\derived\\pgms\\create-casedata.csv\"\r\n-h \"O:\\Data Management\\ae_recon\\data\\derived\\pgms\\test.html\"\r\n-s prod\r\n-a false\r\n-m false\r\n-g test:junk\r\n\r\n"
     }
   }
 }
